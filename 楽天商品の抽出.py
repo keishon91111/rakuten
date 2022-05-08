@@ -16,8 +16,6 @@ for (_, row) in df.iterrows():
     #     result.append(row)
     # if "" in str(row["商品番号"]):
     #     result.append(row)
-    # if "クリアアイズ" in str(row["商品名"]):
-    #     result.append(row)
 df2 = pd.DataFrame(data=result, columns=df.columns)
 df2["コントロールカラム"] = "u"
 # df2.loc[df2["商品名"].str.contains("香水"), "在庫あり時の納期"] = "2"
