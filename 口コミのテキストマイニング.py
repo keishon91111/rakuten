@@ -6,29 +6,18 @@ import signal
 from webdriver_manager.chrome import ChromeDriverManager
 browser = webdriver.Chrome()
 df = pd.read_csv("レビュー.csv", encoding="sjis")
+df = df[["年代", "評価", "レビュー本文"]]
 result = []
-
-for (_, row) in df.iterrows():
-    if "5" in str(row["評価"]):
+result2 = []
+for i, row in df.iterrows():
+    if row["評価"] >= 4:
         result.append(row)
-    if "4" in str(row["評価"]):
-        result.append(row)
+    else:
+        result2.append(row)
 df2 = pd.DataFrame(data=result, columns=df.columns)
-df2.drop(["商品名", "商品管理番号", "使いみち", "商品URL", "投稿日", "名前", "プロフィールURL", "件数",
-         "年代", "レビューのタイトル", "使う人", "購入した回数", "評価", "性別"], axis=1, inplace=True)
-df2.to_csv("レビュー　高評価.csv", encoding="sjis", index=False)
-result = []
-for (_, row) in df.iterrows():
-    if "3" in str(row["評価"]):
-        result.append(row)
-    if "2" in str(row["評価"]):
-        result.append(row)
-    if "1" in str(row["評価"]):
-        result.append(row)
-df3 = pd.DataFrame(data=result, columns=df.columns)
-df3.drop(["商品名", "商品管理番号", "使いみち", "商品URL", "投稿日", "名前", "プロフィールURL", "件数",
-         "年代", "レビューのタイトル", "使う人", "購入した回数", "評価", "性別"], axis=1, inplace=True)
-df3.to_csv("レビュー　低評価.csv", encoding="sjis", index=False)
+df3 = pd.DataFrame(data=result2, columns=df.columns)
+df2.to_csv("レビュー 高評価.csv", encoding="sjis", index=False)
+df3.to_csv("レビュー 低評価.csv", encoding="sjis", index=False)
 
 try:
     browser.get(
